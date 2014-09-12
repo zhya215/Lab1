@@ -118,8 +118,8 @@ object Lab1 extends jsy.util.JsyApplication {
     def check(t: SearchTree, min: Int, max: Int): Boolean = t match {
       case Empty => true
       case Node(l, d, r) => 
-        if(d < max && d >= min){ 
-          if(check(l, min, d)) check(r, d, max) else false
+        if(d < max && d >= min){ //check if the value meets the requirement
+          if(check(l, min, d)) check(r, d, max) else false //check if the left child meets the requirement
         }
         else false
     }
@@ -138,7 +138,7 @@ object Lab1 extends jsy.util.JsyApplication {
       case Node(Empty, d, r) => (r, d)
       case Node(l, d, r) =>
         val (l1, m) = deleteMin(l)
-        (Node(l1, d, r),m)
+        (Node(l1, d, r),m) //replace the left child by the new searchtree, and return the value of deleted node.
     }
   }
  
@@ -146,10 +146,10 @@ object Lab1 extends jsy.util.JsyApplication {
     case Empty => Empty
     case Node(l, d, r) =>
       if(n < d) Node(delete(l, n), d, r) else if (n > d) Node(l, d, delete(r, n))
-      else{(t: @unchecked) match {
-          case Node(Empty, d, r) => r
-          case Node(l, d, Empty) => l
-          case Node(l, d, r) => Node(l, deleteMin(r)._2, deleteMin(r)._1)
+      else{(t: @unchecked) match { //if the node meets the value
+          case Node(Empty, d, r) => r // if the node doesn't have left child, replace the node by the right child.
+          case Node(l, d, Empty) => l // if the node doesn't have right child, replace the node by the left child.
+          case Node(l, d, r) => Node(l, deleteMin(r)._2, deleteMin(r)._1) // if the node have two children, use deletemin to find the minimum node in the right subtree, and use the node to replace the deleted node.
         }
       }
   }
